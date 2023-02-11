@@ -15,4 +15,9 @@ public class StudentController {
         return "course-market";
     }
 
+    @GetMapping("/features")
+    public String featuresPage(Model model){
+
+        return "features";
+    }
 }
