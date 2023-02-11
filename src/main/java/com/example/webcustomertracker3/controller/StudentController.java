@@ -38,5 +38,9 @@ public class StudentController {
 
         return "course-info";
     }
+    @GetMapping("/features")
+    public String features(){
 
+        return "features-page";
+    }
 }
