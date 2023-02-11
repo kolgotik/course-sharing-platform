@@ -12,15 +12,15 @@
  margin: 0 10px;
 }
 .card-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-    }
+display: flex;
+flex-direction: row; /* Change the direction from column to row */
+justify-content: center;
+align-items: center;
+margin-bottom: 20px;
+padding: 20px;
+justify-content: space-between;
+
+}
 .card-details {
  color: black;
  height: 100%;

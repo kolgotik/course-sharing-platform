@@ -12,13 +12,13 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
+    private int id;
 
     @Column(name = "title")
-    String title;
+    private String title;
 
-    @Column(name = "amount_of_users")
-    int amountOfUsers;
+    @Column(name = "description")
+    private String description;
 
     public Course() {
     }
@@ -53,11 +53,11 @@ public class Course {
         this.title = title;
     }
 
-    public int getAmountOfUsers() {
-        return amountOfUsers;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAmountOfUsers(int amountOfUsers) {
-        this.amountOfUsers = amountOfUsers;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
