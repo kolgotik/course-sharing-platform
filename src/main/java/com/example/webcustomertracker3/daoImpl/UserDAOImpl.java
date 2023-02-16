@@ -22,8 +22,13 @@ public class UserDAOImpl implements UserDAO {
     private EntityManager entityManager;
 
 
+    public void persist(User user){
+        entityManager.persist(user);
+    }
+
     @Override
     public <S extends User> S save(S entity) {
+
         return null;
     }
 

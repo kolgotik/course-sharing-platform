@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -171,5 +172,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<User> findAll(Pageable pageable) {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void persist(User user) {
+        userDAO.persist(user);
     }
 }
