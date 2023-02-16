@@ -1,7 +1,8 @@
-package com.example.webcustomertracker3.service;
+package com.example.webcustomertracker3.serviceImpl;
 
 import com.example.webcustomertracker3.dao.CustomerDAO;
 import com.example.webcustomertracker3.entity.Customer;
+import com.example.webcustomertracker3.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

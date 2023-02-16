@@ -1,5 +1,6 @@
-package com.example.webcustomertracker3.dao;
+package com.example.webcustomertracker3.daoImpl;
 
+import com.example.webcustomertracker3.dao.StudentDAO;
 import com.example.webcustomertracker3.entity.Course;
 import jakarta.persistence.EntityManager;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Repository
-public class StudentDAOImpl implements StudentDAO{
+public class StudentDAOImpl implements StudentDAO {
 
     @Autowired
     private EntityManager entityManager;

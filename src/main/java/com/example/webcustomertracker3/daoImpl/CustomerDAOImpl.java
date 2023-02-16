@@ -1,4 +1,4 @@
-package com.example.webcustomertracker3.dao;
+package com.example.webcustomertracker3.daoImpl;
 
 import com.example.webcustomertracker3.dao.CustomerDAO;
 import com.example.webcustomertracker3.entity.Customer;
