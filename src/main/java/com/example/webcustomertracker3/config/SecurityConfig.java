@@ -17,7 +17,7 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/get-course/**")
+                .requestMatchers("/student/get-course/**")
                 .hasRole("STUDENT")
                 .anyRequest()
                 .permitAll()

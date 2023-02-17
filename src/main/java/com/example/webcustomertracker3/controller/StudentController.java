@@ -44,4 +44,10 @@ public class StudentController {
 
         return "features-page";
     }
+
+    @GetMapping("/get-course")
+    public String getCoursePage(){
+
+        return "get-course";
+    }
 }
