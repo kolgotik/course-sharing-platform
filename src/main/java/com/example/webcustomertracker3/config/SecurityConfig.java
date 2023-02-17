@@ -16,8 +16,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 
-
         return httpSecurity.authorizeHttpRequests()
+                .requestMatchers("/get-course/**")
+                .hasRole("STUDENT")
+                .anyRequest()
+                .permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/").permitAll().and().build();
+
+        /*return httpSecurity.authorizeHttpRequests()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -26,7 +38,7 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout().permitAll()
-                .and().build();
+                .and().build();*/
     }
 
 }
