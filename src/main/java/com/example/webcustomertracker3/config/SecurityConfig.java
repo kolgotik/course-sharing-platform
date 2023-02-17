@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/course-login")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()

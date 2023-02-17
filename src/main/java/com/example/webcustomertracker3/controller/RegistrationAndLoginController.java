@@ -41,4 +41,9 @@ public class RegistrationAndLoginController {
 
         return "register-success";
     }
+
+    @GetMapping("/course-login")
+    public String showCourseLoginPage(){
+        return "course-login";
+    }
 }
