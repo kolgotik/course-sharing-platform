@@ -1,7 +1,6 @@
-package com.example.webcustomertracker3.daoImpl;
+package com.example.webcustomertracker3.user;
 
 import com.example.webcustomertracker3.dao.UserDAO;
-import com.example.webcustomertracker3.entity.User;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

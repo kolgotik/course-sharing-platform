@@ -1,14 +1,14 @@
 package com.example.webcustomertracker3.controller;
 
-import com.example.webcustomertracker3.entity.User;
+import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.service.UserService;
+import com.example.webcustomertracker3.user.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class RegistrationAndLoginController {
@@ -36,7 +36,7 @@ public class RegistrationAndLoginController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
+        user.setUserRole(UserRole.ROLE_STUDENT);
         userService.persist(user);
 
         return "register-success";

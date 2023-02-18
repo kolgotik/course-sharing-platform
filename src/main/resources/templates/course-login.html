@@ -31,7 +31,10 @@
 
       <div style="padding-top: 30px" class="panel-body">
 
-        <p>In order to acquire the brilliant tome of knowledge, you must be signed in!</p>
+        <div th:if="${param.error == null}">
+          <p>In order to acquire the brilliant tome of knowledge, you must be signed in!</p>
+
+        </div>
         <!-- Login Form -->
         <form th:action="@{/auth}" method="POST" class="form-horizontal">
 
