@@ -22,6 +22,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public Course getCourse(int id) {
         return studentDAO.getCourse(id);
     }
