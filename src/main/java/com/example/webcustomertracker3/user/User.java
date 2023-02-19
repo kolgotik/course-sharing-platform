@@ -1,4 +1,4 @@
-package com.example.webcustomertracker3.entity;
+package com.example.webcustomertracker3.user;
 
 import jakarta.persistence.*;
 
@@ -21,6 +21,13 @@ public class User {
 
     @Column(name = "last_name",nullable = false, unique = true)
     private String lastName;
+
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
     public User() {
     }
@@ -63,5 +70,21 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 }

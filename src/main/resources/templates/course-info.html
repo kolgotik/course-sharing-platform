@@ -32,8 +32,8 @@
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+                <a th:href="@{/login}" class="btn btn-outline-light me-2">Login</a>
+                <a th:href="@{/register}" class="btn btn-warning">Register</a>
             </div>
         </div>
     </div>
@@ -46,6 +46,9 @@
 <br>
 <br>
 <h4 style="padding: 20px;"  th:text="'Course: ' + ${course.title}"></h4>
+<br>
+<br>
+<a style="padding: 20px;" th:href="@{/student/get-course}">Get the Course</a>
 <br>
 <br>
 <a style="padding: 20px;" th:href="@{/student/course-market}">Go Back</a>

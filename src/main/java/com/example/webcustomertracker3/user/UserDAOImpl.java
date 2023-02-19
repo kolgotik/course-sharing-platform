@@ -1,7 +1,6 @@
-package com.example.webcustomertracker3.daoImpl;
+package com.example.webcustomertracker3.user;
 
 import com.example.webcustomertracker3.dao.UserDAO;
-import com.example.webcustomertracker3.entity.User;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -22,8 +21,13 @@ public class UserDAOImpl implements UserDAO {
     private EntityManager entityManager;
 
 
+    public void persist(User user){
+        entityManager.persist(user);
+    }
+
     @Override
     public <S extends User> S save(S entity) {
+
         return null;
     }
 
