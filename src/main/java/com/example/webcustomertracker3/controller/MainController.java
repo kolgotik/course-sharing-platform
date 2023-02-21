@@ -8,6 +8,7 @@ import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.List;
@@ -32,14 +34,11 @@ public class MainController {
     @Autowired
     private StudentService studentService;
 
-
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/")
-    public String viewHomePage(@ModelAttribute String username, Model model, HttpServletRequest httpServletRequest, Principal principal) {
+    public String viewHomePage(Model model, HttpServletRequest httpServletRequest, Principal principal) {
 
-        User user = userRepository.findByUsername(username);
-
-        model.addAttribute("user", user);
-
+        //User user = userRepository.findByUsername(username);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
@@ -48,13 +47,13 @@ public class MainController {
         model.addAttribute("courses", courses);
         model.addAttribute("httpServletRequest", httpServletRequest);
 
-        if (authentication instanceof AnonymousAuthenticationToken) {
+        if (principal != null) {
 
-            return "index";
+            return "logged-index";
 
         } else
 
-            return "logged-index";
+            return "index";
 
 
     }

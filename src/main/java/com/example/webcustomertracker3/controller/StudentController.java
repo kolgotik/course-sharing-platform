@@ -61,18 +61,13 @@ public class StudentController {
     @GetMapping("/get-course")
     public String getCoursePage(@RequestParam String username, Principal principal, HttpSession session, Model model){
 
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        User user = userRepository.findByUsername(username);
-        User user1 = userService.authenticate(user.getUsername(),user.getPassword());
-
-        model.addAttribute("user", user1);
-
-        if (authentication.getPrincipal() != null && authentication.isAuthenticated()) {
+        if (authentication != null && authentication.isAuthenticated()){
 
             return "get-course";
 
-        } else*/
+        } else
 
             return "course-login";
 

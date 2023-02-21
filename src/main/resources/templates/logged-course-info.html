@@ -32,8 +32,8 @@
       </form>
 
       <div class="text-end" th:object="${user}">
-        <a th:href="@{/profile}" th:text="${session.username}"></a>
-        <a th:href="@{/logout}" class="btn btn-outline-light me-2">Logout</a>
+        <a th:href="@{/profile}" th:text="${session.username}" class="btn btn-outline-light me-2"></a>
+        <a th:href="@{/logout}" class="btn btn-warning">Logout</a>
       </div>
     </div>
   </div>
