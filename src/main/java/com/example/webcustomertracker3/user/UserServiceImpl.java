@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +20,13 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Override
@@ -177,5 +183,21 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void persist(User user) {
         userDAO.persist(user);
+    }
+
+    @Override
+    public User authenticate(String username, String password) {
+
+        User user = userRepository.findByUsername(username);
+
+        if (user == null || !passwordEncoder().matches(password, user.getPassword())){
+            throw new BadCredentialsException("Invalid username or password");
+        }
+
+        return user;
+    }
+
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

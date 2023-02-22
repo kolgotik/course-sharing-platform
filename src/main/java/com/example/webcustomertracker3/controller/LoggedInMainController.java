@@ -5,22 +5,23 @@ import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
+import jakarta.persistence.Access;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping("/student")
-public class StudentController {
+public class LoggedInMainController {
 
     @Autowired
     private UserService userService;
@@ -31,45 +32,35 @@ public class StudentController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/course-market")
-    public String showCourses(Model model){
+    @GetMapping("/user-main")
+    public String mainPageForLoggedUsers(String username, Model model, Principal principal, HttpSession httpSession) {
+
+        User user = userRepository.findByUsername(username);
 
         List<Course> courses = studentService.getCourses();
 
+        httpSession.setAttribute("username",principal.getName());
 
+        model.addAttribute("user", user);
         model.addAttribute("courses", courses);
 
-        return "course-market";
-    }
-
-    @GetMapping("/show-more-info")
-    public String showMoreInfo(@RequestParam("courseId") int id ,Model model){
-
-        Course course = studentService.getCourse(id);
-
-        model.addAttribute("course", course);
-
-        return "course-info";
-    }
-
-    @GetMapping("/features")
-    public String features(){
-
-        return "features-page";
-    }
-
-    @GetMapping("/get-course")
-    public String getCoursePage(@RequestParam String username, Principal principal, HttpSession session, Model model){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated()){
+      /*  if (httpSession.getAttribute("user") == null) {
+            return "index";
+        }
+         else if (httpSession.getAttribute("user") != null) {
+            return "logged-index";
+        }*/
 
-            return "logged-get-course";
+        if (authentication != null && authentication.isAuthenticated()) {
+
+            return "logged-index";
 
         } else
 
-            return "course-login";
-
+            return "index";
     }
+
 }

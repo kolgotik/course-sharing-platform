@@ -18,7 +18,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/student/course-market" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="/user-main" class="nav-link px-2 text-secondary">Home</a></li>
                 <li><a href="/student/features" class="nav-link px-2 text-white">Features</a></li>
                 <li><a href="/customer/list" class="nav-link px-2 text-white">Customer Page</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
@@ -31,19 +31,19 @@
                        aria-label="Search">
             </form>
 
-           <!-- &lt;!&ndash; If user is logged in, show this content &ndash;&gt;
-            <div th:if="${#httpServletRequest.getUserPrincipal() != null}">
-                <p>Welcome, <span th:text="${#httpServletRequest.getUserPrincipal().getName()}" class="btn btn-outline-light me-2"></span>!</p>
-                <a href="/logout" class="btn btn-warning">Logout</a>
-            </div>
+           <!-- <div class="text-end" th:if="${#authentication.isAuthenticated()}">
+                <p><span th:if="${#httpServletRequest.getUserPrincipal().getName()}"></span></p>
+                <a th:href="@{/logout}">Logout</a>
 
-            &lt;!&ndash; If user is not logged in, show this content &ndash;&gt;
-            <div th:if="${#httpServletRequest.getUserPrincipal() == null}">
-                <p>Please <a href="/login" class="btn btn-outline-light me-2">login</a> to access the site.</p>
-            </div>-->
-            <div class="text-end" >
-                <a th:href="@{/login}"  class="btn btn-outline-light me-2">Login</a>
+            </div>
+            <div class="text-end" th:if="${#httpServletRequest.getUserPrincipal() == null}">
+                <a th:href="@{/login}" class="btn btn-outline-light me-2">Login</a>
                 <a th:href="@{/register}" class="btn btn-warning">Register</a>
+            </div>-->
+
+            <div class="text-end" th:object="${user}">
+                <a th:href="@{/profile}" th:text="${session.username}" class="btn btn-outline-light me-2"></a>
+                <a th:href="@{/logout}" class="btn btn-warning">Logout</a>
             </div>
         </div>
     </div>
@@ -51,7 +51,8 @@
 <br>
 <br>
 <div style="text-align: center;">
-    <h2 >Courses in this Market were not validated well, the reason is 90% of validators die, disappear or go on a binge.</h2>
+    <h2>Courses in this Market were not validated well, the reason is 90% of validators die, disappear or go on a
+        binge.</h2>
     <br>
     <br>
     <p style="text-align: center;">
@@ -68,7 +69,7 @@
                     <p class="text-title" th:text="${course.title}"></p>
                     <p class="text-body" th:text="${course.description}"></p>
                 </div>
-                <a class="card-button" th:href="@{/student/show-more-info(courseId=${course.id})}">More info</a>
+                <a class="card-button" th:href="@{/user/show-more-info(courseId=${course.id})}">More info</a>
             </div>
         </div>
     </div>
@@ -77,12 +78,12 @@
 <br>
 <br>
 <br>
-<a style="padding: 20px;" href="/student/course-market">Go to market of free wisdom</a>
+<a style="padding: 20px;" href="/user-main">Go to market of free wisdom</a>
 
 </body>
 <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="/student/course-market" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="/user-main" class="nav-link px-2 text-muted">Home</a></li>
         <li class="nav-item"><a href="/student/features" class="nav-link px-2 text-muted">Features</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
