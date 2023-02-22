@@ -65,7 +65,7 @@ public class StudentController {
 
         if (authentication != null && authentication.isAuthenticated()){
 
-            return "get-course";
+            return "logged-get-course";
 
         } else
 

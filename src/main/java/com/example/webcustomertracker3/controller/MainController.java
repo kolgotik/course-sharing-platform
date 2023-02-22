@@ -34,7 +34,7 @@ public class MainController {
     @Autowired
     private StudentService studentService;
 
-    @PreAuthorize("isAuthenticated()")
+
     @GetMapping("/")
     public String viewHomePage(Model model, HttpServletRequest httpServletRequest, Principal principal) {
 

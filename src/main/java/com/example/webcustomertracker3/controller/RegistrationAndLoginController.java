@@ -38,7 +38,7 @@ public class RegistrationAndLoginController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage(Model model) {
+    public String showLoginPage() {
 
         /*User user = userRepository.findByUsername();*/
 
@@ -50,7 +50,9 @@ public class RegistrationAndLoginController {
 
         User user = userService.authenticate(username, password);
 
+
         if (user != null) {
+            session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
             return "redirect:/user-main";

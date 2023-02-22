@@ -31,6 +31,16 @@
                        aria-label="Search">
             </form>
 
+           <!-- &lt;!&ndash; If user is logged in, show this content &ndash;&gt;
+            <div th:if="${#httpServletRequest.getUserPrincipal() != null}">
+                <p>Welcome, <span th:text="${#httpServletRequest.getUserPrincipal().getName()}" class="btn btn-outline-light me-2"></span>!</p>
+                <a href="/logout" class="btn btn-warning">Logout</a>
+            </div>
+
+            &lt;!&ndash; If user is not logged in, show this content &ndash;&gt;
+            <div th:if="${#httpServletRequest.getUserPrincipal() == null}">
+                <p>Please <a href="/login" class="btn btn-outline-light me-2">login</a> to access the site.</p>
+            </div>-->
             <div class="text-end" >
                 <a th:href="@{/login}"  class="btn btn-outline-light me-2">Login</a>
                 <a th:href="@{/register}" class="btn btn-warning">Register</a>
