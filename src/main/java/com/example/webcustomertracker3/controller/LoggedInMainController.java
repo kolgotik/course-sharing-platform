@@ -35,14 +35,19 @@ public class LoggedInMainController {
     @GetMapping("/user-main")
     public String mainPageForLoggedUsers(String username, Model model, Principal principal, HttpSession httpSession) {
 
-        User user = userRepository.findByUsername(username);
+       User user = userRepository.findByUsername(username);
+
 
         List<Course> courses = studentService.getCourses();
 
-        httpSession.setAttribute("username",principal.getName());
+        //httpSession.setAttribute("username",principal.getName());
+        httpSession.setAttribute("user", user);
+        httpSession.setAttribute("userId", user.getId());
+        httpSession.setAttribute("username", principal.getName());
 
         model.addAttribute("user", user);
         model.addAttribute("courses", courses);
+        model.addAttribute("username", user.getUsername());
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

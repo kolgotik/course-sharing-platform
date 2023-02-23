@@ -2,6 +2,7 @@ package com.example.webcustomertracker3.user;
 
 import com.example.webcustomertracker3.dao.UserDAO;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,12 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     private EntityManager entityManager;
 
+
+    public User findByUsername(String username) {
+        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username =: username");
+        query.setParameter("username", username);
+        return (User) query.getSingleResult();
+    }
 
     public void persist(User user){
         entityManager.persist(user);
