@@ -7,6 +7,7 @@ import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class StudentController {
     private UserRepository userRepository;
 
     @GetMapping("/course-market")
-    public String showCourses(Model model){
+    public String showCourses(Model model) {
 
         List<Course> courses = studentService.getCourses();
 
@@ -43,7 +44,7 @@ public class StudentController {
     }
 
     @GetMapping("/show-more-info")
-    public String showMoreInfo(@RequestParam("courseId") int id ,Model model){
+    public String showMoreInfo(@RequestParam("courseId") int id, Model model) {
 
         Course course = studentService.getCourse(id);
 
@@ -53,17 +54,19 @@ public class StudentController {
     }
 
     @GetMapping("/features")
-    public String features(){
+    public String features() {
 
         return "features-page";
     }
 
     @GetMapping("/get-course")
-    public String getCoursePage(@RequestParam String username, Principal principal, HttpSession session, Model model){
+    public String getCoursePage(String username, Principal principal, HttpSession httpSession, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated()){
+        if (authentication != null && authentication.isAuthenticated()) {
+
+            httpSession.setAttribute("username", principal.getName());
 
             return "logged-get-course";
 

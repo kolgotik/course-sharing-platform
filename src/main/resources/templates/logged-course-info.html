@@ -33,7 +33,9 @@
 
       <div class="text-end" th:object="${user}">
         <a th:href="@{/profile}" th:text="${session.username}" class="btn btn-outline-light me-2"></a>
-        <a th:href="@{/logout}" class="btn btn-warning">Logout</a>
+        <form th:action="@{/logout}" class="btn btn-warning" method="post">
+          <input type="submit" value="Logout" class="btn btn-warning">
+        </form>
       </div>
     </div>
   </div>
