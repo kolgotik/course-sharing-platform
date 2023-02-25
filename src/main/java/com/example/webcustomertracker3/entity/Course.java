@@ -24,9 +24,9 @@ public class Course {
     }
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinTable(name = "student_has_course",
-            joinColumns = @JoinColumn(name = "courses_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @JoinTable(name = "user-has-course",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<Student> students = new java.util.ArrayList<>();
 
     public void setStudents(List<Student> students) {

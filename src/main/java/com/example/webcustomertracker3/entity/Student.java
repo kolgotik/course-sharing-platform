@@ -22,11 +22,11 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-     @JoinTable(name = "student_has_course",
-             joinColumns = @JoinColumn(name = "student_id"),
-             inverseJoinColumns = @JoinColumn(name = "courses_id"))
-     List<Course> courses = new java.util.ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JoinTable(name = "student_has_course",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "courses_id"))
+    List<Course> courses = new java.util.ArrayList<>();
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
