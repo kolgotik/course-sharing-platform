@@ -6,6 +6,8 @@ import com.example.webcustomertracker3.user.UserRepository;
 import com.example.webcustomertracker3.user.UserRole;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,9 +40,9 @@ public class RegistrationAndLoginController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(Model model) {
 
-        /*User user = userRepository.findByUsername();*/
+
 
         return "login";
     }
@@ -50,11 +52,12 @@ public class RegistrationAndLoginController {
 
         User user = userService.authenticate(username, password);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (user != null) {
-            session.setAttribute("user", user);
+        if (user != null && authentication.isAuthenticated()) {
+            /*session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
-            session.setAttribute("username", user.getUsername());
+            session.setAttribute("username", user.getUsername());*/
             return "redirect:/user-main";
         } else
             return "redirect:/login?error";

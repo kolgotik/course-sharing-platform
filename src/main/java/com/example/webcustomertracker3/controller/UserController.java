@@ -33,7 +33,11 @@ public class UserController {
     }
 
     @GetMapping("/get-course")
-    public String getCoursePage(Principal principal){
+    public String getCoursePage(Principal principal, @RequestParam("courseId") int id, Model model){
+
+        Course course = studentService.getCourse(id);
+
+        model.addAttribute("course", course);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

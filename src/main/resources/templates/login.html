@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <title>Login Page</title>
@@ -30,6 +31,14 @@
       </div>
 
       <div style="padding-top: 30px" class="panel-body">
+
+        <!--<div sec:authorize="isAnonymous()">
+          <div class="form-group">
+            <div class="col-xs-15">
+                <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                  <p>In order to acquire the brilliant tome of knowledge, you must be signed in!</p>
+                </div>
+        </div>-->
 
         <!-- Login Form -->
         <form th:action="@{/process-login}"  method="POST" class="form-horizontal">

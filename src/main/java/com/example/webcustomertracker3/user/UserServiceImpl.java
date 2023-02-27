@@ -3,6 +3,9 @@ package com.example.webcustomertracker3.user;
 
 import com.example.webcustomertracker3.dao.UserDAO;
 import com.example.webcustomertracker3.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,12 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+
+
+    public User findByUsername(String username) {
+        User user = userDAO.findByUsername(username);
+        return user;
+    }
 
     @Override
     public void flush() {
