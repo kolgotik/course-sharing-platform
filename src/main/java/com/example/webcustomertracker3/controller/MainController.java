@@ -7,6 +7,7 @@ import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -36,10 +37,11 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String viewHomePage(Model model, HttpServletRequest httpServletRequest, Principal principal) {
+    public String viewHomePage(Model model, HttpServletRequest httpServletRequest, Principal principal, HttpSession httpSession) {
 
         //User user = userRepository.findByUsername(username);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
 
         List<Course> courses = studentService.getCourses();
@@ -48,6 +50,8 @@ public class MainController {
         model.addAttribute("httpServletRequest", httpServletRequest);
 
         if (principal != null) {
+
+            httpSession.setAttribute("username", principal.getName());
 
             return "logged-index";
 

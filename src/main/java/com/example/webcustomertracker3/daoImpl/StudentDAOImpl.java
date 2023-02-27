@@ -39,4 +39,14 @@ public class StudentDAOImpl implements StudentDAO {
 
         return course;
     }
+
+    @Override
+    public void addCourses(int id) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Course course = session.get(Course.class, id);
+
+        session.persist(course);
+    }
+
 }

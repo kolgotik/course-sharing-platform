@@ -3,6 +3,7 @@ package com.example.webcustomertracker3.user;
 import com.example.webcustomertracker3.entity.Course;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,7 +38,7 @@ public class User {
     @JoinTable(name = "user-has-course",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses = new java.util.ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 
     public User() {
     }
