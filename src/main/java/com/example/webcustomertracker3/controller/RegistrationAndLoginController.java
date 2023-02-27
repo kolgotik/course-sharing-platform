@@ -55,9 +55,9 @@ public class RegistrationAndLoginController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (user != null && authentication.isAuthenticated()) {
-            /*session.setAttribute("user", user);
+            session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
-            session.setAttribute("username", user.getUsername());*/
+            session.setAttribute("username", user.getUsername());
             return "redirect:/user-main";
         } else
             return "redirect:/login?error";

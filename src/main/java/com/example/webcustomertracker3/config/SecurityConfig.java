@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -26,6 +27,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalAuthentication
 public class SecurityConfig {
 
     @Autowired
@@ -50,6 +52,7 @@ public class SecurityConfig {
         return httpSecurity.authorizeHttpRequests()
                 .requestMatchers("/user-main/**")
                 .hasRole("STUDENT")
+                .requestMatchers("/user/**").hasRole("STUDENT")
                 .requestMatchers("/student/get-course/**")
                 .hasRole("STUDENT")
                 .anyRequest()

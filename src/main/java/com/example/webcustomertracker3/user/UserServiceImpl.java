@@ -2,6 +2,7 @@ package com.example.webcustomertracker3.user;
 
 
 import com.example.webcustomertracker3.dao.UserDAO;
+import com.example.webcustomertracker3.entity.Course;
 import com.example.webcustomertracker3.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -204,6 +205,14 @@ public class UserServiceImpl implements UserService{
         }
 
         return user;
+    }
+
+    @Override
+    public List<Course> getCoursesByUserId(int userId) {
+
+        List<Course> courses = userDAO.getCoursesByUserId(userId);
+
+        return courses;
     }
 
     private PasswordEncoder passwordEncoder() {

@@ -9,4 +9,6 @@ public interface StudentService {
     List<Course> getCourses();
 
     Course getCourse(int id);
+
+    void addCourses(int id);
 }

@@ -1,6 +1,7 @@
 package com.example.webcustomertracker3.user;
 
 import com.example.webcustomertracker3.dao.UserDAO;
+import com.example.webcustomertracker3.entity.Course;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,13 @@ public class UserDAOImpl implements UserDAO {
         Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.username =: username");
         query.setParameter("username", username);
         return (User) query.getSingleResult();
+    }
+
+    @Override
+    public List<Course> getCoursesByUserId(int userId) {
+        Query query = entityManager.createQuery("SELECT c FROM Course c JOIN c.users u WHERE u.id = :userId");
+        query.setParameter("userId", userId);
+        return query.getResultList();
     }
 
     public void persist(User user){

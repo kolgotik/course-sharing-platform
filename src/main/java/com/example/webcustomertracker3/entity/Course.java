@@ -1,8 +1,10 @@
 package com.example.webcustomertracker3.entity;
 
 
+import com.example.webcustomertracker3.user.User;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,15 +29,10 @@ public class Course {
     @JoinTable(name = "user-has-course",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<Student> students = new java.util.ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
 
-    public List<Student> getStudents() {
-        return students;
-    }
+
 
     public int getId() {
         return id;

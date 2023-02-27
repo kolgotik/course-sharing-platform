@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+</head>
+<body>
+<div>
+    <div th:each="course : ${courses}">
+        <p th:text="${course.title}"></p>
+    </div>
+</div>
+</body>
+</html>
