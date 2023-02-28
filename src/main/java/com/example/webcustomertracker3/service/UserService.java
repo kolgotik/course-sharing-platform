@@ -14,4 +14,6 @@ public interface UserService extends JpaRepository<User,Integer> {
     User authenticate(String username, String password);
 
     List<Course> getCoursesByUserId(int userId);
+
+    void deleteCourse(int courseId, int userId);
 }

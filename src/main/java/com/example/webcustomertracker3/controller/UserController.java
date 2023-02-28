@@ -5,10 +5,8 @@ import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -103,6 +101,22 @@ public class UserController {
         } else
             return "redirect:/login";
 
+    }
+
+    @PostMapping("/delete-course/{id}")
+    public String deleteCourses(@PathVariable int id, Principal principal, Model model) {
+
+        String username = principal.getName();
+
+        User user = userService.findByUsername(username);
+
+        Course course = studentService.getCourse(id);
+
+        List<Course> courses = userService.getCoursesByUserId(id);
+
+        userService.deleteCourse(course.getId(), user.getId());
+
+        return "redirect:/user/my-courses";
     }
 
     @GetMapping("/profile")
