@@ -36,6 +36,15 @@ public class UserDAOImpl implements UserDAO {
         return query.getResultList();
     }
 
+    @Override
+    public void deleteCourse(int courseId, int userId) {
+        Query query = entityManager.createNativeQuery("DELETE FROM `user-has-course` WHERE course_id = :courseId AND user_id = :userId");
+        query.setParameter("courseId", courseId);
+        query.setParameter("userId", userId);
+        query.executeUpdate();
+    }
+
+
     public void persist(User user){
         entityManager.persist(user);
     }

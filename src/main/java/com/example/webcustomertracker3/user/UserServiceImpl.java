@@ -215,6 +215,13 @@ public class UserServiceImpl implements UserService{
         return courses;
     }
 
+    @Override
+    @Transactional
+    public void deleteCourse(int courseId, int userId) {
+        userDAO.deleteCourse(courseId, userId);
+    }
+
+
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
