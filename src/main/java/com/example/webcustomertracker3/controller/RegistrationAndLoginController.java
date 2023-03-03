@@ -1,5 +1,6 @@
 package com.example.webcustomertracker3.controller;
 
+
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.UserRepository;
@@ -48,7 +49,7 @@ public class RegistrationAndLoginController {
     }
 
     @PostMapping("/process-login")
-    public String processLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Principal principal) {
+    public String processLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Principal principal, Model model) {
 
         User user = userService.authenticate(username, password);
 
@@ -58,6 +59,7 @@ public class RegistrationAndLoginController {
             session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
+
             return "redirect:/user-main";
         } else
             return "redirect:/login?error";
@@ -78,5 +80,11 @@ public class RegistrationAndLoginController {
     @GetMapping("/course-login")
     public String showCourseLoginPage() {
         return "course-login";
+    }
+
+    @GetMapping("/login-err")
+    public String cantHaveMoreThanOneSessionError(Model model){
+        model.addAttribute("alreadyLoggedIn", "this user is already logged in");
+        return "user-already-logged-err";
     }
 }

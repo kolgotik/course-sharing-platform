@@ -1,6 +1,8 @@
 package com.example.webcustomertracker3.controller;
 
+import com.example.webcustomertracker3.entity.Comment;
 import com.example.webcustomertracker3.entity.Course;
+import com.example.webcustomertracker3.service.CommentService;
 import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
@@ -29,11 +31,18 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CommentService commentService;
+
 
     @GetMapping("/show-more-info")
     public String getCourseInfo(@RequestParam("courseId") int id, Model model) {
 
         Course course = studentService.getCourse(id);
+
+        List<Comment> comments = commentService.getAllComments(id);
+
+        model.addAttribute("comments", comments);
 
         model.addAttribute("course", course);
 

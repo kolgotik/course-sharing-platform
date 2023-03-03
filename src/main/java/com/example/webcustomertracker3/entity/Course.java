@@ -31,8 +31,16 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public int getId() {
         return id;
