@@ -1,29 +1,21 @@
 package com.example.webcustomertracker3.config;
 
-import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
-import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -49,7 +41,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity, RememberMeServices rememberMeServices) throws Exception {
 
-        return httpSecurity.authorizeHttpRequests()
+        return httpSecurity
+                .authorizeHttpRequests()
                 .requestMatchers("/user-main/**")
                 .hasRole("STUDENT")
                 .requestMatchers("/user/**").hasRole("STUDENT")
@@ -80,6 +73,7 @@ public class SecurityConfig {
                 .logout().permitAll()
                 .and().build();*/
     }
+
     @Bean
     RememberMeServices rememberMeServices(UserDetailsService userDetailsService){
         TokenBasedRememberMeServices.RememberMeTokenAlgorithm encodingAlgorithm = TokenBasedRememberMeServices.RememberMeTokenAlgorithm.SHA256;
@@ -87,6 +81,5 @@ public class SecurityConfig {
         rememberMeServices.setMatchingAlgorithm(TokenBasedRememberMeServices.RememberMeTokenAlgorithm.MD5);
         return rememberMeServices;
     }
-
 
 }

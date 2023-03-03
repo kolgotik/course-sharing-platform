@@ -39,7 +39,7 @@ public class MainController {
     @GetMapping("/")
     public String viewHomePage(Model model, HttpServletRequest httpServletRequest, Principal principal, HttpSession httpSession) {
 
-        //User user = userRepository.findByUsername(username);
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
@@ -50,8 +50,9 @@ public class MainController {
         model.addAttribute("httpServletRequest", httpServletRequest);
 
         if (principal != null) {
-
+            User user = userService.findByUsername(principal.getName());
             httpSession.setAttribute("username", principal.getName());
+            model.addAttribute("user", user);
 
             return "logged-index";
 

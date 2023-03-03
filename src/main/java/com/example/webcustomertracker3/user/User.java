@@ -1,5 +1,6 @@
 package com.example.webcustomertracker3.user;
 
+import com.example.webcustomertracker3.entity.Comment;
 import com.example.webcustomertracker3.entity.Course;
 import jakarta.persistence.*;
 
@@ -34,11 +35,23 @@ public class User {
     private UserRole userRole;
 
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "user-has-course",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public User() {
     }

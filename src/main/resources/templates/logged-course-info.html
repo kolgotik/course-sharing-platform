@@ -50,6 +50,44 @@
 <h4 style="padding: 20px;"  th:text="'Course: ' + ${course.title}"></h4>
 <br>
 <br>
+<div class="container mt-3">
+  <div class="row" >
+    <div class="col-md-12">
+      <h4 class="mb-3">Comments</h4>
+      <div th:each="comment : ${comments}">
+        <div class="media mb-3">
+          <img src="https://via.placeholder.com/50" class="mr-3 rounded-circle" alt="user avatar">
+          <div class="media-body">
+            <h5 class="mt-0 mb-1" th:text="${comment.username}"></h5>
+            <p th:text="${comment.text}" class="mb-0"></p>
+          </div>
+        </div>
+      </div>
+      <form method="post" th:action="@{/post-comment/{username}&{courseId}(username=${session.username}, courseId=${course.id})}" class="mt-3">
+        <div class="form-group">
+          <label for="comment">Leave a comment:</label>
+          <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<br>
+<!--<div class="card my-4">
+  <h5 class="card-header">Leave a Comment:</h5>
+  <div class="card-body">
+    <form th:action="@{/post-comment/{username}&{courseId}(username=${session.username}, courseId=${course.id})}" method="post">
+      <div class="form-group">
+        <textarea class="form-control" rows="3" name="comment"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>-->
+<br>
+<br>
 <div th:object="${course}">
   <a style="padding: 20px;"  th:href="@{/user/get-course(courseId=${course.id})}">Get the Course</a>
 </div>
