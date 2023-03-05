@@ -1,6 +1,8 @@
 package com.example.webcustomertracker3.controller;
 
+import com.example.webcustomertracker3.entity.Comment;
 import com.example.webcustomertracker3.entity.Course;
+import com.example.webcustomertracker3.service.CommentService;
 import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.UserRepository;
@@ -31,6 +33,9 @@ public class StudentController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping("/course-market")
     public RedirectView showCourses(Model model, Authentication authentication) {
 
@@ -51,6 +56,10 @@ public class StudentController {
     public String showMoreInfo(@RequestParam("courseId") int id, Model model) {
 
         Course course = studentService.getCourse(id);
+
+        List<Comment> comments = commentService.getAllComments(id);
+
+        model.addAttribute("comments", comments);
 
         model.addAttribute("course", course);
 

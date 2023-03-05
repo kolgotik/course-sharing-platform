@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,10 +32,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public void addComment(String username, int courseId, String content) {
+    public void addComment(String username, int courseId, String content, Timestamp createdAt) {
         User user = userService.findByUsername(username);
         Course course = studentService.getCourse(courseId);
-
+        createdAt = Timestamp.valueOf(LocalDateTime.now());
 
         if (user != null && course != null){
             String actualUsername = user.getUsername();
@@ -42,6 +44,7 @@ public class CommentServiceImpl implements CommentService {
             comment.setUser(user);
             comment.setCourse(course);
             comment.setUsername(actualUsername);
+            comment.setTimestamp(createdAt);
 
             commentRepo.persist(comment);
         }

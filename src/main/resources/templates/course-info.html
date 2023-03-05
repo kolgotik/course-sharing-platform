@@ -47,6 +47,24 @@
 <br>
 <h4 style="padding: 20px;"  th:text="'Course: ' + ${course.title}"></h4>
 <br>
+<div class="container mt-3">
+    <div class="row" >
+        <div class="col-md-12">
+            <h4 class="mb-3">Comments</h4>
+            <div th:each="comment : ${comments}">
+                <div class="media mb-3">
+                    <img src="https://via.placeholder.com/50"  class="mr-3 rounded-circle order-1 order-md-0"  alt="user avatar">
+
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1" th:text="${comment.username}"></h5>
+                        <p th:text="'Created at: ' + ${comment.timestamp}"></p>
+                        <p th:text="${comment.text}" class="mb-0"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <br>
 <a style="padding: 20px;"  th:href="@{/student/get-course(courseId=${course.id})}">Get the Course</a>
 <br>
