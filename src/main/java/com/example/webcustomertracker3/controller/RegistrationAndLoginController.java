@@ -5,7 +5,10 @@ import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.UserRepository;
 import com.example.webcustomertracker3.user.UserRole;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class RegistrationAndLoginController {
@@ -32,17 +36,20 @@ public class RegistrationAndLoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
 
         model.addAttribute("user", new User());
+
 
         return "signup-form";
     }
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
-
 
 
         return "login";
@@ -67,14 +74,27 @@ public class RegistrationAndLoginController {
 
 
     @PostMapping("/process-register")
-    public String processRegister(User user) {
+    public String processRegister(User user, Model model) {
+        String username = user.getUsername();
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        user.setUserRole(UserRole.ROLE_STUDENT);
-        userService.persist(user);
-
-        return "register-success";
+        boolean isUsernameUnique = userService.isUsernameUnique(username);
+        boolean isEmailUnique = userService.isEmailUnique(user.getEmail());
+        if (isUsernameUnique && isEmailUnique){
+            user.setPassword(encodedPassword);
+            user.setUserRole(UserRole.ROLE_STUDENT);
+            userService.persist(user);
+            return "register-success";
+        }
+        if (!isUsernameUnique){
+            model.addAttribute("nonUniqueUsernameErr", "this username is already in use choose another");
+            return "nonUniqueUsernameErr";
+        }
+        if (!isEmailUnique){
+            model.addAttribute("nonUniqueEmailErr", "this email is occupied choose another");
+            return "nonUniqueEmailErr";
+        }
+        return "";
     }
 
     @GetMapping("/course-login")
@@ -83,8 +103,9 @@ public class RegistrationAndLoginController {
     }
 
     @GetMapping("/login-err")
-    public String cantHaveMoreThanOneSessionError(Model model){
+    public String cantHaveMoreThanOneSessionError(Model model) {
         model.addAttribute("alreadyLoggedIn", "this user is already logged in");
         return "user-already-logged-err";
     }
+
 }

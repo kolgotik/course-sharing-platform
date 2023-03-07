@@ -44,6 +44,30 @@ public class UserDAOImpl implements UserDAO {
         query.executeUpdate();
     }
 
+    @Override
+    public boolean isUsernameUnique(String username) {
+        Query query = entityManager.createQuery("SELECT u.username FROM User u");
+        List<String> usernameList = query.getResultList();
+        for (String name : usernameList) {
+            if (username.equals(name)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isEmailUnique(String email) {
+        Query query = entityManager.createQuery("SELECT u.email FROM User u");
+        List<String> emailList = query.getResultList();
+        for (String emailFromList:emailList) {
+            if (email.equals(emailFromList)){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public void persist(User user){
         entityManager.persist(user);

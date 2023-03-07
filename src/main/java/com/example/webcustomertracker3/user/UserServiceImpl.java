@@ -221,6 +221,18 @@ public class UserServiceImpl implements UserService{
         userDAO.deleteCourse(courseId, userId);
     }
 
+    @Override
+    @Transactional
+    public boolean isUsernameUnique(String username) {
+        return userDAO.isUsernameUnique(username);
+    }
+
+    @Override
+    @Transactional
+    public boolean isEmailUnique(String email) {
+        return userDAO.isEmailUnique(email);
+    }
+
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
