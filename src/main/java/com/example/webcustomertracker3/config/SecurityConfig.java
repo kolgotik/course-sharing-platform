@@ -42,11 +42,9 @@ public class SecurityConfig {
 
         return httpSecurity
                 .authorizeHttpRequests()
-                .requestMatchers("/user-main/**")
-                .hasRole("STUDENT")
-                .requestMatchers("/user/**").hasRole("STUDENT")
-                .requestMatchers("/student/get-course/**")
-                .hasRole("STUDENT")
+                .requestMatchers("/user-main/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
+                .requestMatchers("/user/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
+                .requestMatchers("/student/get-course/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
                 .anyRequest()
                 .permitAll()
                 .and()
