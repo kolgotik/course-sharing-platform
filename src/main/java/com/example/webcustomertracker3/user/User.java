@@ -34,7 +34,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-
+    @Column(name = "balance")
+    private int balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
@@ -44,6 +45,14 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
 
     public List<Comment> getComments() {
         return comments;
