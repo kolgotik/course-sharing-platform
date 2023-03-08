@@ -233,6 +233,12 @@ public class UserServiceImpl implements UserService{
         return userDAO.isEmailUnique(email);
     }
 
+    @Override
+    @Transactional
+    public void createCourse(Course course) {
+        userDAO.createCourse(course);
+    }
+
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

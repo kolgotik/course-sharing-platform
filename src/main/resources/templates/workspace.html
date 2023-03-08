@@ -34,16 +34,6 @@
                        aria-label="Search">
             </form>
 
-            <!-- <div class="text-end" th:if="${#authentication.isAuthenticated()}">
-                 <p><span th:if="${#httpServletRequest.getUserPrincipal().getName()}"></span></p>
-                 <a th:href="@{/logout}">Logout</a>
-
-             </div>
-             <div class="text-end" th:if="${#httpServletRequest.getUserPrincipal() == null}">
-                 <a th:href="@{/login}" class="btn btn-outline-light me-2">Login</a>
-                 <a th:href="@{/register}" class="btn btn-warning">Register</a>
-             </div>-->
-
             <div class="text-end" th:object="${user}">
                 <a th:href="@{/user/profile}" th:text="${session.username}" class="btn btn-outline-light me-2"></a>
                 <form th:action="@{/logout}" class="btn btn-warning" method="post">
@@ -66,19 +56,64 @@
 </div>
 <br>
 <br>
-<div>
-    <div th:object="${courses}">
-        <div class="card-container">
-            <div style="text-align: center;" class="card" th:each="course : ${courses}">
-                <div class="card-details">
-                    <p class="text-title" th:text="${course.title}"></p>
-                    <p class="text-body" th:text="${course.description}"></p>
-                </div>
-                <a class="card-button" th:href="@{/user/show-more-info(courseId=${course.id})}">More info</a>
-            </div>
+<div class="container">
+    <h1 class="text-center my-4">Create a Course</h1>
+
+    <form th:action="@{/instructor/process-create-course}" th:object="${course}" method="post" >
+        <div class="form-group">
+            <label for="courseName">Course Name:</label>
+            <input type="text" class="form-control" id="courseName" th:field="*{title}" name="courseName" maxlength="50" required placeholder="Enter course name">
+            <p class="help-block">Remaining characters: <span id="courseNameCount">50</span></p>
         </div>
-    </div>
+        <div class="form-group">
+            <label for="description">Course Description</label>
+            <textarea class="form-control" maxlength="200" id="description" th:field="*{description}" name="description" placeholder="Enter course description"
+                      rows="3" required></textarea>
+            <p class="help-block">Remaining characters: <span id="courseDescriptionCount">200</span></p>
+        </div>
+        <div class="form-group">
+            <label for="content">Course Content</label>
+            <textarea class="form-control" maxlength="10000" id="content" th:field="*{content}" name="content" placeholder="Enter course content" rows="10"
+                      required></textarea>
+            <p class="help-block">Remaining characters: <span id="courseContentCount">10000</span></p>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Course</button>
+    </form>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+  var maxChars = 50;
+  $('#courseName').keyup(function() {
+    var length = $(this).val().length;
+    var remainingChars = maxChars - length;
+    $('#courseNameCount').text(remainingChars);
+  });
+});
+</script>
+<script>
+    $(document).ready(function() {
+  var maxChars = 200;
+  $('#description').keyup(function() {
+    var length = $(this).val().length;
+    var remainingChars = maxChars - length;
+    $('#courseDescriptionCount').text(remainingChars);
+  });
+});
+</script>
+<script>
+    $(document).ready(function() {
+  var maxChars = 10000;
+  $('#content').keyup(function() {
+    var length = $(this).val().length;
+    var remainingChars = maxChars - length;
+    $('#courseContentCount').text(remainingChars);
+  });
+});
+</script>
 <a style="padding: 20px;" href="/customer/list">Go to customer list</a>
 <br>
 <br>

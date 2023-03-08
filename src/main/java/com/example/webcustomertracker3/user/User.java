@@ -29,12 +29,9 @@ public class User {
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
-
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
@@ -44,6 +41,26 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private List<Course> createdCourses = new ArrayList<>();
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Course> getCreatedCourses() {
+        return createdCourses;
+    }
+
+    public void setCreatedCourses(List<Course> createdCourses) {
+        this.createdCourses = createdCourses;
+    }
 
     public List<Comment> getComments() {
         return comments;
@@ -56,13 +73,6 @@ public class User {
     public User() {
     }
 
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
     public Integer getId() {
         return id;
     }

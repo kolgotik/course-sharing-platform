@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,6 +49,15 @@ public class RegistrationAndLoginController {
         return "signup-form";
     }
 
+    @GetMapping("/register-as-creator")
+    public String showRegistrationFormForCreators(Model model) {
+
+        model.addAttribute("user", new User());
+
+
+        return "sign-up-as-creator";
+    }
+
     @GetMapping("/login")
     public String showLoginPage(Model model) {
 
@@ -70,8 +80,33 @@ public class RegistrationAndLoginController {
             return "redirect:/user-main";
         } else
             return "redirect:/login?error";
+
     }
 
+    @PostMapping("/process-register-as-creator")
+    public String processRegisterAsCreator(User user, Model model) {
+        String username = user.getUsername();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        boolean isUsernameUnique = userService.isUsernameUnique(username);
+        boolean isEmailUnique = userService.isEmailUnique(user.getEmail());
+
+        if (isUsernameUnique && isEmailUnique){
+            user.setPassword(encodedPassword);
+            user.setUserRole(UserRole.ROLE_INSTRUCTOR);
+            userService.persist(user);
+            return "register-success";
+        }
+        if (!isUsernameUnique){
+            model.addAttribute("nonUniqueUsernameErr", "this username is already in use choose another");
+            return "nonUniqueUsernameForCreatorErr";
+        }
+        if (!isEmailUnique){
+            model.addAttribute("nonUniqueEmailForCreatorErr", "this email is occupied choose another");
+            return "nonUniqueEmailErr";
+        }
+        return "";
+    }
 
     @PostMapping("/process-register")
     public String processRegister(User user, Model model) {
