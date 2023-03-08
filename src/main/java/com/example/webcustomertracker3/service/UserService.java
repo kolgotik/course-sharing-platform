@@ -19,4 +19,6 @@ public interface UserService extends JpaRepository<User,Integer> {
 
     boolean isUsernameUnique(String username);
     boolean isEmailUnique(String email);
+
+    void createCourse(Course course);
 }

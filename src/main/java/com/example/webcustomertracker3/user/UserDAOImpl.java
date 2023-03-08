@@ -68,6 +68,11 @@ public class UserDAOImpl implements UserDAO {
         return true;
     }
 
+    @Override
+    public void createCourse(Course course) {
+        entityManager.persist(course);
+    }
+
 
     public void persist(User user){
         entityManager.persist(user);

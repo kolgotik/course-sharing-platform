@@ -45,6 +45,7 @@ public class SecurityConfig {
                 .requestMatchers("/user-main/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
                 .requestMatchers("/user/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
                 .requestMatchers("/student/get-course/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
+                .requestMatchers("/instructor/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_INSTRUCTOR")
                 .anyRequest()
                 .permitAll()
                 .and()

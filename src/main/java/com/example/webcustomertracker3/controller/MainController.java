@@ -6,6 +6,7 @@ import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
+import com.example.webcustomertracker3.user.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,6 @@ public class MainController {
             User user = userService.findByUsername(principal.getName());
             httpSession.setAttribute("username", principal.getName());
             model.addAttribute("user", user);
-
             return "logged-index";
 
         } else

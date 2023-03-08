@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<div class="alert alert-danger" role="alert">
+    <p th:text="${nonUniqueUsernameErr}"></p>
+    <a href="/register-as-creator">Try again</a>
+</div>
+</body>
+</html>

@@ -80,6 +80,7 @@ public class RegistrationAndLoginController {
             return "redirect:/user-main";
         } else
             return "redirect:/login?error";
+
     }
 
     @PostMapping("/process-register-as-creator")
@@ -98,10 +99,10 @@ public class RegistrationAndLoginController {
         }
         if (!isUsernameUnique){
             model.addAttribute("nonUniqueUsernameErr", "this username is already in use choose another");
-            return "nonUniqueUsernameErr";
+            return "nonUniqueUsernameForCreatorErr";
         }
         if (!isEmailUnique){
-            model.addAttribute("nonUniqueEmailErr", "this email is occupied choose another");
+            model.addAttribute("nonUniqueEmailForCreatorErr", "this email is occupied choose another");
             return "nonUniqueEmailErr";
         }
         return "";
