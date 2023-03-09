@@ -1,6 +1,7 @@
 package com.example.webcustomertracker3.controller;
 
 import com.example.webcustomertracker3.entity.Course;
+import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRole;
@@ -8,10 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -22,6 +20,9 @@ public class UserInstructorController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StudentService studentService;
 
     @GetMapping("/workspace")
     public String workspaceForCreators(Principal principal, Model model, HttpSession session){
@@ -56,5 +57,22 @@ public class UserInstructorController {
         model.addAttribute("createdCourses", courseList);
 
         return "created-courses-list";
+    }
+
+    @GetMapping("/edit-course/{id}")
+    public String showFormToEditCourse(@PathVariable int id, Model model){
+
+        Course course = studentService.getCourse(id);
+        model.addAttribute("course", course);
+
+        return "course-edit";
+
+    }
+
+    @PostMapping("/process-edit-course/{id}")
+    public String updateCourse(@PathVariable int id, @ModelAttribute("course") Course course, Model model, Principal principal){
+        User user = userService.findByUsername(principal.getName());
+        studentService.updateCourse(course);
+        return "redirect:/instructor/created-courses";
     }
 }

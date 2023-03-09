@@ -3,12 +3,10 @@ package com.example.webcustomertracker3.daoImpl;
 import com.example.webcustomertracker3.dao.StudentDAO;
 import com.example.webcustomertracker3.entity.Course;
 import jakarta.persistence.EntityManager;
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -49,4 +47,19 @@ public class StudentDAOImpl implements StudentDAO {
         session.persist(course);
     }
 
+    @Override
+    public void updateCourse(Course course) {
+        Session session = entityManager.unwrap(Session.class);
+        Course courseToUpdate = session.get(Course.class, course.getId());
+        courseToUpdate.setTitle(course.getTitle());
+        courseToUpdate.setDescription(course.getDescription());
+        courseToUpdate.setContent(course.getContent());
+
+        session.persist(courseToUpdate);
+    }
+
+
 }
+
+
+
