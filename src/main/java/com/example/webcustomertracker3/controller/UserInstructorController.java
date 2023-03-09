@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/instructor")
@@ -47,4 +48,13 @@ public class UserInstructorController {
         return "default-success";
     }
 
+    @GetMapping("/created-courses")
+    public String showCreatedCourses(Principal principal, Model model){
+
+        User user = userService.findByUsername(principal.getName());
+        List<Course> courseList = user.getCreatedCourses();
+        model.addAttribute("createdCourses", courseList);
+
+        return "created-courses-list";
+    }
 }

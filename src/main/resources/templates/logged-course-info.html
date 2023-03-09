@@ -49,6 +49,12 @@
 <br>
 <h4 style="padding: 20px;"  th:text="'Course: ' + ${course.title}"></h4>
 <br>
+<h5 style="padding: 20px;"  th:text="'Course description: ' + ${course.description}"></h5>
+<br>
+<div th:object="${course}">
+  <a style="padding: 20px;"  th:href="@{/user/get-course(courseId=${course.id})}">Get the Course</a>
+</div>
+<br>
 <br>
 <div class="container mt-3">
   <div class="row" >
@@ -90,11 +96,7 @@
 </div>-->
 <br>
 <br>
-<div th:object="${course}">
-  <a style="padding: 20px;"  th:href="@{/user/get-course(courseId=${course.id})}">Get the Course</a>
-</div>
-<br>
-<br>
+
 <a style="padding: 20px;" th:href="@{/user-main}">Go Back</a>
 <br>
 </body>

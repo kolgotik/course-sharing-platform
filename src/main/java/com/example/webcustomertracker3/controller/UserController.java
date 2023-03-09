@@ -7,6 +7,7 @@ import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
+import com.example.webcustomertracker3.user.UserRole;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -64,25 +65,6 @@ public class UserController {
             return "course-login";
     }
 
-    /*@PostMapping("/process-get-course/{id}")
-    public String addCourseToAccount(@RequestParam int id, Model model, HttpSession httpSession, Principal principal){
-
-        studentService.addCourses(id);
-
-        Course course = studentService.getCourse(id);
-
-        model.addAttribute("myCourse", course);
-
-        User user = (User) httpSession.getAttribute("user");
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (principal != null && authentication.isAuthenticated()){
-            return "redirect:/user/my-courses";
-        }else
-            return "redirect:/login";
-
-    }*/
 
     @PostMapping("/process-get-course/{id}")
     public String addCourseToAccount(@PathVariable int id, Model model, HttpSession httpSession) {
@@ -129,7 +111,12 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String myProfile() {
+    public String myProfile(Principal principal) {
+
+        User user = userService.findByUsername(principal.getName());
+        if (user.getUserRole().equals(UserRole.ROLE_INSTRUCTOR)){
+            return "instructor-profile";
+        }
 
         return "profile";
     }
@@ -148,4 +135,13 @@ public class UserController {
         return "course-list";
     }
 
+    @GetMapping("/open-course/{id}")
+    public String openCourse(@PathVariable int id, Model model) {
+
+        Course course = studentService.getCourse(id);
+        model.addAttribute("course", course);
+
+        return "course-content-page";
+
+    }
 }

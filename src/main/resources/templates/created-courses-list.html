@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
@@ -16,18 +16,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="course : ${courses}">
+    <tr th:each="course : ${createdCourses}">
         <td th:text="${course.title}"></td>
         <td th:text="${course.description}"></td>
         <td>
-            <form th:action="@{/user/open-course/{id}(id=${course.id})}" method="get">
-                <input style="padding: 20px;" type="submit" value="Open" class="btn btn-warning">
+            <form th:action="@{/instructor/edit-course/{id}(id=${course.id})}" method="get">
+                <input style="padding: 20px;" type="submit" value="Edit" class="btn btn-warning">
             </form>
         </td>
         <td>
-            <form th:action="@{/user/delete-course/{id}(id=${course.id})}"
-                  onclick="if(!(confirm('Are you sure?'))) return false" method="post">
-                <input style="padding: 20px;" type="submit" value="Remove" class="btn btn-warning">
+            <form th:action="@{/instructor/delete-course/{id}(id=${course.id})}"
+                  onclick="if(!(confirm('Are you sure? This course will sink into oblivion'))) return false" method="post">
+                <input style="padding: 20px;" type="submit" value="Delete" class="btn btn-warning">
             </form>
         </td>
     </tr>
@@ -36,5 +36,7 @@
 <br>
 <a style="padding: 20px;" href="/">Go to Main Page</a>
 
+
+</div>
 </body>
 </html>

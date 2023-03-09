@@ -34,16 +34,6 @@
                        aria-label="Search">
             </form>
 
-            <!-- <div class="text-end" th:if="${#authentication.isAuthenticated()}">
-                 <p><span th:if="${#httpServletRequest.getUserPrincipal().getName()}"></span></p>
-                 <a th:href="@{/logout}">Logout</a>
-
-             </div>
-             <div class="text-end" th:if="${#httpServletRequest.getUserPrincipal() == null}">
-                 <a th:href="@{/login}" class="btn btn-outline-light me-2">Login</a>
-                 <a th:href="@{/register}" class="btn btn-warning">Register</a>
-             </div>-->
-
             <div class="text-end" th:object="${user}">
                 <a th:href="@{/user/profile}" th:text="${session.username}" class="btn btn-outline-light me-2"></a>
                 <form th:action="@{/logout}" class="btn btn-warning" method="post">
