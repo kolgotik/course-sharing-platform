@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+hkXjB9fFjKUKL12XvxhvaDlYw/CwYXPTm3l3h"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-5" th:object="${course}">
+    <h1 class="text-center mb-4" th:text="${course.title}"></h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-3" th:text="${course.description}"></h4>
+            <p class="card-text" th:text="${course.content}"></p>
+        </div>
+    </div>
+</div>
+<a  href="/user/my-courses">Go Back</a>
+</body>
+</html>
