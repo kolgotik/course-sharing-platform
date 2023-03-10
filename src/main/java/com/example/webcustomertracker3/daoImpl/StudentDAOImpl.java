@@ -58,6 +58,13 @@ public class StudentDAOImpl implements StudentDAO {
         session.persist(courseToUpdate);
     }
 
+    @Override
+    public void deleteCourse(int id) {
+        Session session = entityManager.unwrap(Session.class);
+        Course courseToDelete = session.get(Course.class, id);
+        session.remove(courseToDelete);
+    }
+
 
 }
 

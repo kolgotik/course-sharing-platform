@@ -18,4 +18,6 @@ public interface StudentService {
     void addCourses(int id);
     void updateCourse(Course course);
 
+    void deleteCourse(int id);
+
 }
