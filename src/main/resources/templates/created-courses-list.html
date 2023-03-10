@@ -26,7 +26,7 @@
         </td>
         <td>
             <form th:action="@{/instructor/delete-course/{id}(id=${course.id})}"
-                  onclick="if(!(confirm('Are you sure? This course will sink into oblivion'))) return false" method="post">
+                  onclick="if(!(confirm('Are you sure? This course will sink into oblivion'))) return false" method="get">
                 <input style="padding: 20px;" type="submit" value="Delete" class="btn btn-warning">
             </form>
         </td>
