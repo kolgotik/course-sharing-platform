@@ -55,7 +55,12 @@
 <a style="padding: 20px;" href="/user/my-courses">See my courses</a>
 <a style="padding: 20px;" href="/customer/list">Go to customer list</a>
 <a style="padding: 20px;" href="/instructor/created-courses">See my creations</a>
-
+<br>
+<br>
+<form th:object="${user}" style="padding: 20px;" th:action="@{/user/avatar}" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatarFile" accept="image/*"/>
+    <button type="submit">Upload Avatar</button>
+</form>
 <br>
 <br>
 <br>

@@ -5,17 +5,21 @@ import com.example.webcustomertracker3.entity.Course;
 import com.example.webcustomertracker3.service.CommentService;
 import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
+import com.example.webcustomertracker3.user.User;
 import com.example.webcustomertracker3.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.security.Principal;
 import java.util.List;
@@ -36,6 +40,9 @@ public class StudentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
     @GetMapping("/course-market")
     public RedirectView showCourses(Model model, Authentication authentication) {
 
@@ -52,19 +59,37 @@ public class StudentController {
 
     }
 
+    @GetMapping("/avatars/{imageName}")
+    @ResponseBody
+    public ResponseEntity<Resource> getAvatar(@PathVariable String imageName) {
+        Resource resource = resourceLoader.getResource("file:src/main/resources/static/avatars/" + imageName);
+        System.out.println("Line 66 StudentController: " + imageName);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
+
+    }
+
     @GetMapping("/show-more-info")
-    public String showMoreInfo(@RequestParam("courseId") int id, Model model) {
+    public String showMoreInfo(@RequestParam("courseId") int id, Model model, Principal principal, HttpSession httpSession) {
 
         Course course = studentService.getCourse(id);
 
         List<Comment> comments = commentService.getAllComments(id);
-
+        String username = (String) httpSession.getAttribute("username");
+//        User user = userService.findByUsername(username);
+        //String avatar = studentService.getAvatarByUsername(user.getUsername());
+        List<User> users = userService.getUsers();
         model.addAttribute("comments", comments);
 
         model.addAttribute("course", course);
 
+        //model.addAttribute("avatar", avatar);
+        model.addAttribute("users", users);
+        //System.out.println("avatars from: " + avatar + course);
+
         return "course-info";
     }
+
+
 
     @GetMapping("/features")
     public String features() {

@@ -10,14 +10,22 @@ import com.example.webcustomertracker3.user.UserRepository;
 import com.example.webcustomertracker3.user.UserRole;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -35,19 +43,62 @@ public class UserController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+
+
 
     @GetMapping("/show-more-info")
-    public String getCourseInfo(@RequestParam("courseId") int id, Model model) {
+    public String getCourseInfo(@RequestParam("courseId") int id, Model model, Principal principal, HttpSession httpSession) {
+
+        User user = userService.findByUsername(principal.getName());
 
         Course course = studentService.getCourse(id);
-
+        String avatar = studentService.getAvatarByUsername(user.getUsername());
         List<Comment> comments = commentService.getAllComments(id);
 
         model.addAttribute("comments", comments);
-
         model.addAttribute("course", course);
+        model.addAttribute("user", user);
+        model.addAttribute("avatar", avatar);
+        model.addAttribute("avatar", user.getAvatar());
+        httpSession.setAttribute("avatar", avatar);
 
         return "logged-course-info";
+    }
+
+    @PostMapping("/avatar")
+    public String uploadAvatar(@RequestParam("avatarFile") MultipartFile avatar, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+
+        if (avatar.isEmpty()) {
+            return "redirect:/user/profile";
+        }
+        String fileName;
+        try {
+            fileName = UUID.randomUUID().toString() + "." + StringUtils.getFilenameExtension(avatar.getOriginalFilename());
+
+            byte[] bytes = avatar.getBytes();
+            Path path = Paths.get("src/main/resources/static/avatars/" + fileName);
+            Files.write(path, bytes);
+
+            if (user.getAvatar() != null) {
+                Path oldPath = Paths.get("src/main/resources/static/avatars/" + user.getAvatar());
+                Files.deleteIfExists(oldPath);
+
+            }
+
+            user.setAvatar(fileName);
+            userService.persist(user);
+            System.out.println("Line 120 UserController: " +  fileName);
+
+            System.out.println("Line 126 UserController: " + path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/get-course")
@@ -111,15 +162,19 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String myProfile(Principal principal) {
+    public String myProfile(Principal principal, Model model) {
 
         User user = userService.findByUsername(principal.getName());
-        if (user.getUserRole().equals(UserRole.ROLE_INSTRUCTOR)){
+        model.addAttribute("avatar", user.getAvatar());
+        model.addAttribute("user", user);
+        if (user.getUserRole().equals(UserRole.ROLE_INSTRUCTOR)) {
+
             return "instructor-profile";
         }
 
         return "profile";
     }
+
 
     @GetMapping("/my-courses")
     public String myCourses(Model model, HttpSession httpSession, Principal principal) {

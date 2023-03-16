@@ -56,6 +56,12 @@
 <a style="padding: 20px;" href="/customer/list">Go to customer list</a>
 <br>
 <br>
+<form th:object="${user}" style="padding: 20px;" th:action="@{/user/avatar}" method="post" enctype="multipart/form-data">
+  <input type="file" name="avatarFile" accept="image/*"/>
+  <button type="submit">Upload Avatar</button>
+</form>
+<br>
+<br>
 <br>
 <a style="padding: 20px;" href="/user-main">Go to market of free wisdom</a>
 
