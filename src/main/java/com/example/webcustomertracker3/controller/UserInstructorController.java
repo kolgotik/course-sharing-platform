@@ -4,15 +4,23 @@ import com.example.webcustomertracker3.entity.Course;
 import com.example.webcustomertracker3.service.StudentService;
 import com.example.webcustomertracker3.service.UserService;
 import com.example.webcustomertracker3.user.User;
+import com.example.webcustomertracker3.user.UserRepository;
 import com.example.webcustomertracker3.user.UserRole;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/instructor")
@@ -24,6 +32,9 @@ public class UserInstructorController {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/workspace")
     public String workspaceForCreators(Principal principal, Model model, HttpSession session) {
         String username = String.valueOf(session.getAttribute("username"));
@@ -31,6 +42,7 @@ public class UserInstructorController {
         Course course = new Course();
         if (user.getUserRole().equals(UserRole.ROLE_INSTRUCTOR)) {
             model.addAttribute("course", course);
+            model.addAttribute("user", user);
             return "workspace";
         }
         if (user.getUserRole().equals(UserRole.ROLE_STUDENT)) {
@@ -84,4 +96,30 @@ public class UserInstructorController {
 
         return "redirect:/instructor/created-courses";
     }
+
+
+
+
+
+    /*@GetMapping("/avatar/{fileName}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveAvatar(@PathVariable String fileName, Principal principal, Model model) {
+        String avatarUploadDir = "C:\\Users\\Kolgotik\\IdeaProjects\\github practice\\src\\main\\java\\com\\example\\webcustomertracker3\\avatars\\";
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        if (user == null || user.getAvatar() == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Path path = Paths.get(avatarUploadDir + fileName);
+        Resource resource;
+        try {
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).contentType(MediaType.IMAGE_JPEG).body(resource);
+    }*/
+
+
 }

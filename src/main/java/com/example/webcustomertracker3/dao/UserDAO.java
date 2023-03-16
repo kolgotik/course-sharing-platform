@@ -3,6 +3,7 @@ package com.example.webcustomertracker3.dao;
 import com.example.webcustomertracker3.entity.Course;
 import com.example.webcustomertracker3.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface UserDAO extends JpaRepository<User, Integer> {
     boolean isEmailUnique(String email);
 
     void createCourse(Course course);
+
+    List<User> getUsers();
+
+    void updateUserAvatarFromComment(String oldFileName, String newFileName);
 }

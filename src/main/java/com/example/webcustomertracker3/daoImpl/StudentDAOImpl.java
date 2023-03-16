@@ -2,6 +2,7 @@ package com.example.webcustomertracker3.daoImpl;
 
 import com.example.webcustomertracker3.dao.StudentDAO;
 import com.example.webcustomertracker3.entity.Course;
+import com.example.webcustomertracker3.user.User;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -63,6 +64,17 @@ public class StudentDAOImpl implements StudentDAO {
         Session session = entityManager.unwrap(Session.class);
         Course courseToDelete = session.get(Course.class, id);
         session.remove(courseToDelete);
+    }
+
+    @Override
+    public String getAvatarByUsername(String username) {
+        Session session = entityManager.unwrap(Session.class);
+        // Query<String > avatarQuery = session.createQuery("SELECT u.avatar FROM User u", String.class);
+        Query<String > userQuery = session.createQuery("SELECT avatar FROM User u WHERE u.username =: username", String.class);
+        userQuery.setParameter("username", username);
+        String avatar = userQuery.getQueryString();
+
+        return avatar;
     }
 
 

@@ -1,9 +1,11 @@
 package com.example.webcustomertracker3.user;
 
 import com.example.webcustomertracker3.dao.UserDAO;
+import com.example.webcustomertracker3.entity.Comment;
 import com.example.webcustomertracker3.entity.Course;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -12,7 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -49,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
         Query query = entityManager.createQuery("SELECT u.username FROM User u");
         List<String> usernameList = query.getResultList();
         for (String name : usernameList) {
-            if (username.equals(name)){
+            if (username.equals(name)) {
                 return false;
             }
         }
@@ -60,8 +64,8 @@ public class UserDAOImpl implements UserDAO {
     public boolean isEmailUnique(String email) {
         Query query = entityManager.createQuery("SELECT u.email FROM User u");
         List<String> emailList = query.getResultList();
-        for (String emailFromList:emailList) {
-            if (email.equals(emailFromList)){
+        for (String emailFromList : emailList) {
+            if (email.equals(emailFromList)) {
                 return false;
             }
         }
@@ -73,8 +77,38 @@ public class UserDAOImpl implements UserDAO {
         entityManager.persist(course);
     }
 
+    @Override
+    public List<User> getUsers() {
+        Session session = entityManager.unwrap(Session.class);
+        org.hibernate.query.Query<User> query = session.createQuery("FROM User", User.class);
+        List<User> temp = query.getResultList();
+        List<User> users = new ArrayList<>();
+        for (User u : temp) {
+            if (u.getAvatar() != null){
+                users.add(u);
+            }
+        }
+        return temp;
 
-    public void persist(User user){
+    }
+
+    @Override
+    public void updateUserAvatarFromComment(String oldFileName, String newFileName) {
+        Session session = entityManager.unwrap(Session.class);
+        org.hibernate.query.Query<Comment> query = session.createQuery("FROM Comment", Comment.class);
+
+        List<Comment> comments = query.getResultList();
+        for (Comment comment : comments) {
+            if (Objects.equals(comment.getUser().getAvatar(), oldFileName)) {
+                User user = comment.getUser();
+                user.setAvatar(newFileName);
+                entityManager.persist(user);
+            }
+        }
+    }
+
+
+    public void persist(User user) {
         entityManager.persist(user);
     }
 

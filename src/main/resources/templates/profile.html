@@ -18,7 +18,7 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="/user-main" class="nav-link px-2 text-secondary">Home</a></li>
+        <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
         <li><a href="/student/features" class="nav-link px-2 text-white">Features</a></li>
         <li><a href="/customer/list" class="nav-link px-2 text-white">Customer Page</a></li>
         <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
@@ -40,8 +40,8 @@
            <a th:href="@{/login}" class="btn btn-outline-light me-2">Login</a>
            <a th:href="@{/register}" class="btn btn-warning">Register</a>
        </div>-->
-
       <div class="text-end" th:object="${user}">
+        <img th:src="@{/student/avatars/{imageName}(imageName = ${user.avatar})}" class="rounded-circle" alt="user avatar" style="width: 50px; height: 50px;"/>
         <a th:href="@{/user/profile}" th:text="${session.username}" class="btn btn-outline-light me-2"></a>
         <form th:action="@{/logout}" class="btn btn-warning" method="post">
           <input type="submit" value="Logout" class="btn btn-warning">
@@ -56,13 +56,19 @@
 <a style="padding: 20px;" href="/customer/list">Go to customer list</a>
 <br>
 <br>
+<form th:object="${user}" style="padding: 20px;" th:action="@{/user/avatar}" method="post" enctype="multipart/form-data">
+  <input type="file" name="avatarFile" accept="image/*"/>
+  <button type="submit">Upload Avatar</button>
+</form>
 <br>
-<a style="padding: 20px;" href="/user-main">Go to market of free wisdom</a>
+<br>
+<br>
+<a style="padding: 20px;" href="/">Go to market of free wisdom</a>
 
 </body>
 <footer class="py-3 my-4">
   <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-    <li class="nav-item"><a href="/user-main" class="nav-link px-2 text-muted">Home</a></li>
+    <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
     <li class="nav-item"><a href="/student/features" class="nav-link px-2 text-muted">Features</a></li>
     <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
     <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>

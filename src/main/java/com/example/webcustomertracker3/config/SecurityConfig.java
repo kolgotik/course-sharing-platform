@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/process-login")
-                .defaultSuccessUrl("/user-main")
+                .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
                 .logout().logoutUrl("/logout").permitAll()

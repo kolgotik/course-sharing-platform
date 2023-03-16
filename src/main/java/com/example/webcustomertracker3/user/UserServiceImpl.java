@@ -239,6 +239,18 @@ public class UserServiceImpl implements UserService{
         userDAO.createCourse(course);
     }
 
+    @Override
+    @Transactional
+    public List<User> getUsers() {
+        return userDAO.getUsers();
+    }
+
+    @Override
+    @Transactional
+    public void updateUserAvatarFromComment(String oldFileName, String newFileName) {
+        userDAO.updateUserAvatarFromComment(oldFileName, newFileName);
+    }
+
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

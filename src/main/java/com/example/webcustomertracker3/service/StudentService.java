@@ -1,12 +1,7 @@
 package com.example.webcustomertracker3.service;
 
 import com.example.webcustomertracker3.entity.Course;
-import com.example.webcustomertracker3.user.User;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface StudentService {
@@ -19,5 +14,7 @@ public interface StudentService {
     void updateCourse(Course course);
 
     void deleteCourse(int id);
+
+    String getAvatarByUsername(String username);
 
 }

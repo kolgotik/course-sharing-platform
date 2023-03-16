@@ -52,8 +52,12 @@ public class MainController {
 
         if (principal != null) {
             User user = userService.findByUsername(principal.getName());
+
             httpSession.setAttribute("username", principal.getName());
+            String avatar = studentService.getAvatarByUsername(principal.getName());
+            httpSession.setAttribute("avatar", avatar);
             model.addAttribute("user", user);
+
             return "logged-index";
 
         } else
