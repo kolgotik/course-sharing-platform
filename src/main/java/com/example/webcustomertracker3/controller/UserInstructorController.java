@@ -42,6 +42,7 @@ public class UserInstructorController {
         Course course = new Course();
         if (user.getUserRole().equals(UserRole.ROLE_INSTRUCTOR)) {
             model.addAttribute("course", course);
+            model.addAttribute("user", user);
             return "workspace";
         }
         if (user.getUserRole().equals(UserRole.ROLE_STUDENT)) {

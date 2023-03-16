@@ -105,9 +105,9 @@ public class UserController {
     public String getCoursePage(Principal principal, @RequestParam("courseId") int id, Model model) {
 
         Course course = studentService.getCourse(id);
-
+        User user = userService.findByUsername(principal.getName());
         model.addAttribute("course", course);
-
+        model.addAttribute("user", user);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
