@@ -62,7 +62,7 @@ public class StudentController {
     @GetMapping("/avatars/{imageName}")
     @ResponseBody
     public ResponseEntity<Resource> getAvatar(@PathVariable String imageName) {
-        Resource resource = resourceLoader.getResource("file:src/main/resources/static/avatars/" + imageName);
+        Resource resource = resourceLoader.getResource("file:D:\\avatars\\" + imageName);
         System.out.println("Line 66 StudentController: " + imageName);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
 
@@ -105,11 +105,10 @@ public class StudentController {
         Course course = studentService.getCourse(id);
 
         if (authentication != null && authentication.isAuthenticated()) {
-
+            User user = userService.findByUsername(principal.getName());
             httpSession.setAttribute("username", principal.getName());
-
             model.addAttribute("course", course);
-
+            model.addAttribute("user", user);
             return "logged-get-course";
 
         } else
@@ -117,4 +116,11 @@ public class StudentController {
             return "course-login";
 
     }
+    @GetMapping("/search-for-course")
+    private String searchForCourse(@RequestParam("courseTitle") String title, Model model){
+        List<Course> courses = userService.searchCourse(title);
+        model.addAttribute("courses", courses);
+        return "index";
+    }
+
 }

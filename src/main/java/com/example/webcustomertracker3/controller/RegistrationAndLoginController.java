@@ -76,7 +76,7 @@ public class RegistrationAndLoginController {
             session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
             session.setAttribute("username", user.getUsername());
-            return "redirect:/user-main";
+            return "redirect:/";
         } else
             return "redirect:/login?error";
 

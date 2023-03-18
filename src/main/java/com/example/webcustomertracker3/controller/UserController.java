@@ -80,11 +80,14 @@ public class UserController {
             fileName = UUID.randomUUID().toString() + "." + StringUtils.getFilenameExtension(avatar.getOriginalFilename());
 
             byte[] bytes = avatar.getBytes();
-            Path path = Paths.get("src/main/resources/static/avatars/" + fileName);
+            //Path path = Paths.get("src/main/resources/static/avatars/" + fileName);
+            Path path = Paths.get("D:\\avatars\\" + fileName);
+
             Files.write(path, bytes);
 
             if (user.getAvatar() != null) {
-                Path oldPath = Paths.get("src/main/resources/static/avatars/" + user.getAvatar());
+                //Path oldPath = Paths.get("src/main/resources/static/avatars/" + user.getAvatar());
+                Path oldPath = Paths.get("D:\\avatars\\" + user.getAvatar());
                 Files.deleteIfExists(oldPath);
 
             }
@@ -199,4 +202,15 @@ public class UserController {
         return "course-content-page";
 
     }
+
+    @GetMapping("/search-for-course")
+    private String searchForCourse(@RequestParam("courseTitle") String title, Model model, Principal principal){
+        List<Course> courses = userService.searchCourse(title);
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        model.addAttribute("courses", courses);
+
+        return "logged-index";
+    }
+
 }
