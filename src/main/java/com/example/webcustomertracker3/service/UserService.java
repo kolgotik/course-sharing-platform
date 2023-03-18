@@ -27,4 +27,6 @@ public interface UserService extends JpaRepository<User,Integer> {
 
     void updateUserAvatarFromComment(String oldFileName, String newFileName);
 
+    List<Course> searchCourse(String courseTitle);
+
 }

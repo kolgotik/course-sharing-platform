@@ -84,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
         List<User> temp = query.getResultList();
         List<User> users = new ArrayList<>();
         for (User u : temp) {
-            if (u.getAvatar() != null){
+            if (u.getAvatar() != null) {
                 users.add(u);
             }
         }
@@ -105,6 +105,25 @@ public class UserDAOImpl implements UserDAO {
                 entityManager.persist(user);
             }
         }
+    }
+
+    @Override
+    public List<Course> searchCourse(String courseTitle) {
+        Session session = entityManager.unwrap(Session.class);
+
+        org.hibernate.query.Query<Course> query;
+
+        if (courseTitle != null && courseTitle.trim().length() > 0){
+            query = session.createQuery("FROM Course WHERE lower(title) LIKE: searchTitle", Course.class);
+            query.setParameter("searchTitle", "%" + courseTitle.toLowerCase() + "%");
+        } else {
+            query = session.createQuery("FROM Course", Course.class);
+        }
+
+        List<Course> list = query.getResultList();
+
+        return list;
+
     }
 
 

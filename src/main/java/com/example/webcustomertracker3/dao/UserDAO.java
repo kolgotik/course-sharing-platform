@@ -25,4 +25,6 @@ public interface UserDAO extends JpaRepository<User, Integer> {
     List<User> getUsers();
 
     void updateUserAvatarFromComment(String oldFileName, String newFileName);
+
+    List<Course> searchCourse(String courseTitle);
 }

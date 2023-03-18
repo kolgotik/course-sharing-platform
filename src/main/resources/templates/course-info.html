@@ -42,11 +42,10 @@
 <br>
 <br>
 <br>
-
-<h2 style="padding: 20px;">Magic coming soon for...</h2>
+<h2 style="padding: 20px;" th:text="'Course: ' + ${course.title}"></h2>
 <br>
 <br>
-<h4 style="padding: 20px;" th:text="'Course: ' + ${course.title}"></h4>
+<h4 style="padding: 20px;" th:text="'Course description: ' + ${course.description}"></h4>
 <br>
 <a style="padding: 20px;" th:href="@{/student/get-course(courseId=${course.id})}">Get the Course</a>
 <br>

@@ -251,6 +251,12 @@ public class UserServiceImpl implements UserService{
         userDAO.updateUserAvatarFromComment(oldFileName, newFileName);
     }
 
+    @Override
+    @Transactional
+    public List<Course> searchCourse(String courseTitle) {
+        return userDAO.searchCourse(courseTitle);
+    }
+
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
